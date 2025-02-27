@@ -1,0 +1,26 @@
+{
+  "name": "postaway",
+  "version": "1.0.0",
+  "description": "\"Social-platform-Api\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kethankoushik09/Postaway.git"
+  },
+  "author": "kethan gaikwad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kethankoushik09/Postaway/issues"
+  },
+  "homepage": "https://github.com/kethankoushik09/Postaway#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.17.0"
+  }
+}

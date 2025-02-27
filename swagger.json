@@ -1,0 +1,338 @@
+{
+    "swagger": "2.0",
+
+
+
+    "info": {
+        "title": "Postaway",
+        "description": "Postaway API Documentation",
+        "version": "1.0.0"
+    },
+
+
+    "host": "localhost:3000",
+    "securityDefinitions": {
+        "JWT": {
+            "in": "header",
+            "name": "Authorization",
+            "type": "apiKey"
+        }
+    },
+
+
+    "paths": {
+        "/api/user/signup": {
+            "post": {
+                "tags": ["User"],
+                "summary": "User Signup",
+                "description": "Register a new user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User credentials",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name":{"type":"string"},
+                                "email": { "type": "string" },
+                                "password": { "type": "string" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "User registered successfully" },
+                    "400": { "description": "Invalid input" }
+                }
+            }
+        },
+
+
+
+        "/api/user/signin": {
+            "post": {
+                "tags": ["User"],
+                "summary": "User Signin",
+                "description": "Authenticate a user",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User credentials",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": { "type": "string" },
+                                "password": { "type": "string" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "User authenticated successfully" },
+                    "401": { "description": "Unauthorized" }
+                }
+            }
+        },
+
+
+        "/api/post": {
+            "get": {
+                "tags": ["Post"],
+                "summary": "Retrieve all posts",
+                "description": "Fetch all posts",
+                "security": [{"JWT": {}}],
+                "responses": {
+                    "200": { "description": "Posts retrieved successfully" },
+                    "404": { "description": "No posts found" }
+                }
+            }
+        },
+
+
+        "/api/post/addpost": {
+            "post": {
+                "tags": ["Post"],
+                "summary": "Create a new post",
+                "description": "Add a new post",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Post details",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "caption": { "type": "string" },
+                                "imageUrl": { "type": "string" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": { "description": "Post created successfully" },
+                    "400": { "description": "Invalid input" }
+                }
+            }
+        },
+
+
+
+        "/api/post/{id}": {
+            "get": {
+                "tags": ["Post"],
+                "summary": "Retrieve a specific post",
+                "description": "Fetch a post by its ID",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Post ID"
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Post retrieved successfully" },
+                    "404": { "description": "Post not found" }
+                }
+            },
+            "put": {
+                "tags": ["Post"],
+                "summary": "Update a post",
+                "description": "Modify a post by its ID",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Post ID"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Updated post details",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "caption": { "type": "string" },
+                                "imageUrl": { "type": "string" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Post updated successfully" },
+                    "404": { "description": "Post not found" }
+                }
+            },
+
+            "delete": {
+                "tags": ["Post"],
+                "summary": "Delete a post",
+                "description": "Remove a post by its ID",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Post ID"
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Post deleted successfully" },
+                    "404": { "description": "Post not found" }
+                }
+            }
+        },
+        "/api/likes/{id}": {
+        "post": {
+            "tags": ["Like"],
+            "summary": "Add a like",
+            "description": "Like a post",
+            "security": [{"JWT": {}}],
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string",
+                    "description": "Post ID"
+                }
+            ],
+            "responses": {
+                "201": { "description": "Like added successfully" },
+                "404": { "description": "Post not found" }
+            }
+        },
+
+        "delete": {
+            "tags": ["Like"],
+            "summary": "Remove a like",
+            "description": "Unlike a post",
+            "security": [{"JWT": {}}],
+            "responses": {
+                "200": { "description": "Like removed successfully" },
+                "404": { "description": "Like not found" }
+            }
+        }
+    },
+    "/api/likes/postlikes/{id}": {
+        "get": {
+            "tags": ["Like"],
+            "summary": "Get likes for a post",
+            "description": "Retrieve all likes for a specific post",
+            "security": [{"JWT": {}}],
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string",
+                    "description": "Post ID"
+                }
+            ],
+            "responses": {
+                "200": { "description": "Likes retrieved successfully" },
+                "404": { "description": "Post not found" }
+            }
+        }
+    },
+    "/api/likes/": {
+        "get": {
+            "tags": ["Like"],
+            "summary": "Get all likes",
+            "description": "Retrieve all likes",
+            "security": [{"JWT": {}}],
+            "responses": {
+                "200": { "description": "Likes retrieved successfully" },
+                "404": { "description": "No likes found" }
+            }
+        }
+    },
+        "/api/comments/{id}": {
+            "post": {
+                "tags": ["Comment"],
+                "summary": "Add a comment",
+                "description": "Add a comment to a post",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Comment details",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "content": { "type": "string" }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": { "description": "Comment added successfully" },
+                    "404": { "description": "Post not found" }
+                }
+            },
+            "delete": {
+                "tags": ["Comment"],
+                "summary": "Remove a comment",
+                "description": "Delete a comment from a post",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Comment ID"
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Comment removed successfully" },
+                    "404": { "description": "Comment not found" }
+                }
+            }
+        },
+        "/api/comments/postcomments/{id}": {
+            "get": {
+                "tags": ["Comment"],
+                "summary": "Get comments for a post",
+                "description": "Retrieve all comments for a specific post",
+                "security": [{"JWT": {}}],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Post ID"
+                    }
+                ],
+                "responses": {
+                    "200": { "description": "Comments retrieved successfully" },
+                    "404": { "description": "Post not found" }
+                }
+            }
+        },
+        "/api/comments/": {
+            "get": {
+                "tags": ["Comment"],
+                "summary": "Get all comments",
+                "description": "Retrieve all comments",
+                "security": [{"JWT": {}}],
+                "responses": {
+                    "200": { "description": "Comments retrieved successfully" },
+                    "404": { "description": "No comments found" }
+                }
+            }
+        }
+    }
+}
